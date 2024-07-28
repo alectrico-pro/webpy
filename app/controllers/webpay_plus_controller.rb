@@ -5,6 +5,7 @@ class WebpayPlusController < ApplicationController
   def initialize
     super 
     logger.info ::Transbank::Common::IntegrationCommerceCodes::WEBPAY_PLUS
+    logger.info ::Transbank::Common::IntegrationApiKeys::WEBPAY
     @tx = Transbank::Webpay::WebpayPlus::Transaction.new(::Transbank::Common::IntegrationCommerceCodes::WEBPAY_PLUS, ::Transbank::Common::IntegrationApiKeys::WEBPAY, :integration)
     @ctrl = "webpay_plus"
   end
