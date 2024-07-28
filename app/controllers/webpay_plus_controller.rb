@@ -3,9 +3,11 @@ class WebpayPlusController < ApplicationController
   skip_before_action :verify_authenticity_token
 
   def initialize
-    super 
+    super
+    logger.info "-----------------------------------------------------------" 
     logger.info ::Transbank::Common::IntegrationCommerceCodes::WEBPAY_PLUS
     logger.info ::Transbank::Common::IntegrationApiKeys::WEBPAY.inspect
+    logger.info "-----------------------------------------------------------"
     wp_base_uri=                 "https://webpay3g.transbank.cl"
     wp_comercio=                 ENV["WEBPAY_CODIGO_COMERCIO"].to_s
     wp_shared_secret=            ENV["WEBPAY_SHARED_SECRET"].to_s
