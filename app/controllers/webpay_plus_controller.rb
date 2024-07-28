@@ -4,17 +4,12 @@ class WebpayPlusController < ApplicationController
 
   def initialize
     super
-    logger.info "-----------------------------------------------------------" 
-    logger.info ::Transbank::Common::IntegrationCommerceCodes::WEBPAY_PLUS
-    logger.info ::Transbank::Common::IntegrationApiKeys::WEBPAY.inspect
-    logger.info "-----------------------------------------------------------"
-    wp_base_uri= "https://webpay3g.transbank.cl"
-    key      = ENV["WEBPAY_API_KEY"].to_s
-    llave    = ENV["WEBPAY_SHARED_SECRET"].to_s
-    wp_api_key= ENV["WEBPAY_API_KEY"].to_s 
-    wp_return_url= "https://api.alectrico.cl/return_url"
+
+    api_key     = ENV['TBK_ENV_PRODUCTION'].present? ? ENV["WEBPAY_API_KEY"].to_s       : ::Transbank::Common::IntegrationCommerceCodes::WEBPAY_PLUS   
+    api_secret  = ENV['TBK_ENV_PRODUCTION'].present? ? ENV["WEBPAY_SHARED_SECRET"].to_s : ::Transbank::Common::IntegrationApiKeys::WEBPAY
+    tbk_env     = ENV['TBK_ENV_PRODUCTION'].present? ? :production                      : :integration
     # @tx = Transbank::Webpay::WebpayPlus::Transaction.new(::Transbank::Common::IntegrationCommerceCodes::WEBPAY_PLUS, ::Transbank::Common::IntegrationApiKeys::WEBPAY, :integration)
-    @tx = Transbank::Webpay::WebpayPlus::Transaction.new( key, llave, :production)
+    @tx = Transbank::Webpay::WebpayPlus::Transaction.new( api_key, api_secret, tbk_env)
     @ctrl = "webpay_plus"
   end
 
@@ -25,7 +20,6 @@ class WebpayPlusController < ApplicationController
     @session_id = "sessionId_#{rand(1000)}"
     @amount = 1000
     @return_url = "#{root_url}#{@ctrl}/commit"
-    @return_url = "https://api.alectrico.cl/return_url"
     @resp = @tx.create(@buy_order, @session_id, @amount, @return_url)
   end
 
