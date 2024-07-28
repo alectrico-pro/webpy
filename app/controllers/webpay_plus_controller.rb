@@ -9,12 +9,12 @@ class WebpayPlusController < ApplicationController
     logger.info ::Transbank::Common::IntegrationApiKeys::WEBPAY.inspect
     logger.info "-----------------------------------------------------------"
     wp_base_uri= "https://webpay3g.transbank.cl"
-    comercio = ENV["WEBPAY_CODIGO_COMERCIO"].to_s
-    llave   = ENV["WEBPAY_SHARED_SECRET"].to_s
+    key      = ENV["WEBPAY_API_KEY"].to_s
+    llave    = ENV["WEBPAY_SHARED_SECRET"].to_s
     wp_api_key= ENV["WEBPAY_API_KEY"].to_s 
     wp_return_url= "https://api.alectrico.cl/return_url"
     # @tx = Transbank::Webpay::WebpayPlus::Transaction.new(::Transbank::Common::IntegrationCommerceCodes::WEBPAY_PLUS, ::Transbank::Common::IntegrationApiKeys::WEBPAY, :integration)
-    @tx = Transbank::Webpay::WebpayPlus::Transaction.new( comercio, llave, :production)
+    @tx = Transbank::Webpay::WebpayPlus::Transaction.new( key, llave, :production)
     @ctrl = "webpay_plus"
   end
 
