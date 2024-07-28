@@ -13,8 +13,14 @@ class WebpayPlusController < ApplicationController
     wp_shared_secret=            ENV["WEBPAY_SHARED_SECRET"].to_s
     wp_api_key=                  ENV["WEBPAY_API_KEY"].to_s 
     wp_return_url=               "ttps://api.alectrico.cl/return_url"
+    # @tx = Transbank::Webpay::WebpayPlus::Transaction.new(::Transbank::Common::IntegrationCommerceCodes::WEBPAY_PLUS, ::Transbank::Common::IntegrationApiKeys::WEBPAY, :integration)
+    #
+    logger.warn "--------------------------------- production --------------------"
+    logger.info wp_comercio
+    logger.info wp_shared_secret
+    logger.warn "-----------------------------------------------------------------"
+    @tx = Transbank::Webpay::WebpayPlus::Transaction.new( wp_comercio, wp_shared_secret, :production)
 
-    @tx = Transbank::Webpay::WebpayPlus::Transaction.new(::Transbank::Common::IntegrationCommerceCodes::WEBPAY_PLUS, ::Transbank::Common::IntegrationApiKeys::WEBPAY, :integration)
     @ctrl = "webpay_plus"
   end
 
