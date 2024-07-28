@@ -8,19 +8,13 @@ class WebpayPlusController < ApplicationController
     logger.info ::Transbank::Common::IntegrationCommerceCodes::WEBPAY_PLUS
     logger.info ::Transbank::Common::IntegrationApiKeys::WEBPAY.inspect
     logger.info "-----------------------------------------------------------"
-    wp_base_uri=                 "https://webpay3g.transbank.cl"
-    wp_comercio=                 ENV["WEBPAY_CODIGO_COMERCIO"].to_s
-    wp_shared_secret=            ENV["WEBPAY_SHARED_SECRET"].to_s
-    wp_api_key=                  ENV["WEBPAY_API_KEY"].to_s 
-    wp_return_url=               "ttps://api.alectrico.cl/return_url"
+    wp_base_uri= "https://webpay3g.transbank.cl"
+    COMERCIO = ENV["WEBPAY_CODIGO_COMERCIO"].to_s
+    LLAVE    = ENV["WEBPAY_SHARED_SECRET"].to_s
+    wp_api_key= ENV["WEBPAY_API_KEY"].to_s 
+    wp_return_url= "https://api.alectrico.cl/return_url"
     # @tx = Transbank::Webpay::WebpayPlus::Transaction.new(::Transbank::Common::IntegrationCommerceCodes::WEBPAY_PLUS, ::Transbank::Common::IntegrationApiKeys::WEBPAY, :integration)
-    #
-    logger.warn "--------------------------------- production --------------------"
-    logger.info wp_comercio
-    logger.info wp_shared_secret
-    logger.warn "-----------------------------------------------------------------"
-    @tx = Transbank::Webpay::WebpayPlus::Transaction.new( wp_comercio, wp_shared_secret, :production)
-
+    @tx = Transbank::Webpay::WebpayPlus::Transaction.new( COMERCIO, LLAVE, :production)
     @ctrl = "webpay_plus"
   end
 
@@ -31,6 +25,7 @@ class WebpayPlusController < ApplicationController
     @session_id = "sessionId_#{rand(1000)}"
     @amount = 1000
     @return_url = "#{root_url}#{@ctrl}/commit"
+    @return_url = "https://api.alectrico.cl/return_url"
     @resp = @tx.create(@buy_order, @session_id, @amount, @return_url)
   end
 
