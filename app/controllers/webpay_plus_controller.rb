@@ -14,7 +14,7 @@ class WebpayPlusController < ApplicationController
     wp_api_key= ENV["WEBPAY_API_KEY"].to_s 
     wp_return_url= "https://api.alectrico.cl/return_url"
     # @tx = Transbank::Webpay::WebpayPlus::Transaction.new(::Transbank::Common::IntegrationCommerceCodes::WEBPAY_PLUS, ::Transbank::Common::IntegrationApiKeys::WEBPAY, :integration)
-    @tx = Transbank::Webpay::WebpayPlus::Transaction.new( comercio, llave, :production)
+    @tx = Transbank::Webpay::WebpayPlus::Transaction.new( comercio, llave, :produccion)
     @ctrl = "webpay_plus"
   end
 
